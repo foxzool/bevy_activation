@@ -1,0 +1,20 @@
+[package]
+name = "bevy_activation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy_app = "0.13"
+bevy_derive = "0.13"
+bevy_ecs = "0.13"
+bevy_reflect = "0.13"
+bevy_time = "0.13"
+
+
+[dev-dependencies]
+bevy = { version = "0.13", default-features = false }
+
+
+[[example]]
+name = "timeout"
+path = "example/timeout.rs"
