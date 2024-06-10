@@ -1,20 +1,29 @@
-use std::time::Duration;
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
-use bevy_time::common_conditions::on_timer;
 use bevy_activation::{ActivationPlugin, ActiveState, TimeoutEvent};
+use bevy_time::common_conditions::on_timer;
+use std::time::Duration;
 
 fn main() {
-    App::new().add_plugins(MinimalPlugins.set(bevy::app::ScheduleRunnerPlugin::run_loop(
-        Duration::from_secs_f64(1.0 / 60.0),
-    )))
+    App::new()
+        .add_plugins(
+            MinimalPlugins.set(bevy::app::ScheduleRunnerPlugin::run_loop(
+                Duration::from_secs_f64(1.0 / 60.0),
+            )),
+        )
         .add_plugins(LogPlugin::default())
         .add_plugins(ActivationPlugin)
         .add_systems(Startup, setup)
-        .add_systems(Update, (check_active, timeout_event, reactive_idle.run_if(time_passed(5.0))))
+        .add_systems(
+            Update,
+            (
+                check_active,
+                timeout_event,
+                reactive_idle.run_if(time_passed(5.0)),
+            ),
+        )
         .run();
 }
-
 
 #[derive(Component)]
 struct TestAlive(pub &'static str);
@@ -23,7 +32,10 @@ fn setup(mut commands: Commands) {
     // this entity always active
     commands.spawn((TestAlive("always alive component"), ActiveState::default()));
     // this entity will be active for 2 seconds
-    commands.spawn((TestAlive("ttl 2 secs component"), ActiveState::new(Duration::from_secs(2))));
+    commands.spawn((
+        TestAlive("ttl 2 secs component"),
+        ActiveState::new(Duration::from_secs(2)),
+    ));
 }
 
 fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
@@ -45,7 +57,6 @@ fn reactive_idle(mut q_idle: Query<&mut ActiveState>) {
         }
     }
 }
-
 
 fn time_passed(t: f32) -> impl FnMut(Local<f32>, Res<Time>) -> bool {
     move |mut timer: Local<f32>, time: Res<Time>| {

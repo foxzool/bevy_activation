@@ -1,12 +1,11 @@
 #![doc = include_str!("../README.md")]
 
-use std::time::Duration;
-use bevy_reflect::Reflect;
-use bevy_time::{Stopwatch, Time};
 use bevy_app::{App, Plugin, PostUpdate};
 use bevy_derive::Deref;
 use bevy_ecs::prelude::*;
-
+use bevy_reflect::Reflect;
+use bevy_time::{Stopwatch, Time};
+use std::time::Duration;
 
 /// Bevy Entity Activation Plugin;
 pub struct ActivationPlugin;
