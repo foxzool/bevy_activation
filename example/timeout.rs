@@ -1,7 +1,6 @@
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
 use bevy_activation::{ActivationPlugin, ActiveState, TimeoutEvent};
-use bevy_time::common_conditions::on_timer;
 use std::time::Duration;
 
 fn main() {

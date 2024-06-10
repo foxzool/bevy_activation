@@ -13,7 +13,6 @@ A simple HTTP client Bevy Plugin for both native and WASM.
 use std::time::Duration;
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
-use bevy_time::common_conditions::on_timer;
 use bevy_activation::{ActivationPlugin, ActiveState, TimeoutEvent};
 
 fn main() {
