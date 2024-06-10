@@ -1,7 +1,13 @@
 [package]
 name = "bevy_activation"
+description = "A simple Entity activation manager for Bevy"
 version = "0.1.0"
 edition = "2021"
+readme = "README.md"
+repository = "https://github.com/foxzool/bevy_activation"
+authors = ["FoxZoOL <zhooul@gmail.com>"]
+license = "MIT OR Apache-2.0"
+keywords = ["bevy", "ecs", "plugin", "wasm"]
 
 [dependencies]
 bevy_app = "0.13"
