@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+#![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/README.md"))]
 
 use bevy_app::{App, Plugin, PostUpdate};
 use bevy_derive::Deref;
