@@ -72,6 +72,7 @@ fn time_passed(t: f32) -> impl FnMut(Local<f32>, Res<Time>) -> bool {
 
 | bevy | bevy_activation |
 |------|-----------------|
+| 0.15 | 0.3             |
 | 0.14 | 0.2             |
 | 0.13 | 0.1             |
 

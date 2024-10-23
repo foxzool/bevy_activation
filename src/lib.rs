@@ -1,7 +1,6 @@
 #![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/README.md"))]
 
 use bevy_app::{App, Plugin, PostUpdate};
-use bevy_derive::Deref;
 use bevy_ecs::prelude::*;
 use bevy_reflect::Reflect;
 use bevy_time::{Stopwatch, Time};
@@ -19,8 +18,8 @@ impl Plugin for ActivationPlugin {
 }
 
 /// Timeout Event
-#[derive(Deref, Debug, Event)]
-pub struct TimeoutEvent(pub Entity);
+#[derive(Event)]
+pub struct TimeoutEvent;
 
 /// Activation State Component
 #[derive(Debug, Component, Reflect)]
@@ -101,9 +100,9 @@ impl ActiveState {
 
 /// set timeout to not active and send timeout event
 fn check_timeout(
+    mut commands: Commands,
     time: Res<Time>,
     mut active_state_query: Query<(Entity, &mut ActiveState)>,
-    mut timeout_events: EventWriter<TimeoutEvent>,
 ) {
     for (entity, mut active_state) in active_state_query.iter_mut() {
         if active_state.is_idle() {
@@ -114,7 +113,7 @@ fn check_timeout(
             watch.tick(time.delta());
 
             if watch.elapsed() >= timeout {
-                timeout_events.send(TimeoutEvent(entity));
+                commands.trigger_targets(TimeoutEvent, entity);
                 watch.reset();
                 active_state.active = false;
             }
