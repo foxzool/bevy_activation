@@ -45,7 +45,7 @@ fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
 
 /// observe timeout event
 fn on_timeout(trigger: Trigger<TimeoutEvent>) {
-    warn!("entity {:?} timeout", trigger.entity());
+    warn!("entity {:?} timeout", trigger.target());
 }
 
 /// reactive idle component to active
