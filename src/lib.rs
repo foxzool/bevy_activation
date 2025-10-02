@@ -12,14 +12,14 @@ pub struct ActivationPlugin;
 impl Plugin for ActivationPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<ActiveState>()
-            .add_event::<TimeoutEvent>()
+            .add_message::<TimeoutEvent>()
             .add_systems(PostUpdate, check_timeout);
     }
 }
 
 /// Timeout Event
-#[derive(Event)]
-pub struct TimeoutEvent;
+#[derive(Event, Message)]
+pub struct TimeoutEvent(pub Entity);
 
 /// Activation State Component
 #[derive(Debug, Component, Reflect)]
@@ -113,7 +113,7 @@ fn check_timeout(
             watch.tick(time.delta());
 
             if watch.elapsed() >= timeout {
-                commands.trigger_targets(TimeoutEvent, entity);
+                commands.trigger(TimeoutEvent(entity));
                 watch.reset();
                 active_state.active = false;
             }

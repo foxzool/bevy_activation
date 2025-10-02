@@ -14,10 +14,12 @@ fn main() {
         .add_plugins(LogPlugin::default())
         .add_plugins(ActivationPlugin)
         .add_systems(Startup, setup)
+        .add_event::<TimeoutEvent>()
         .add_systems(
             Update,
             (
                 check_active,
+                on_timeout,
                 reactive_idle.run_if(on_timer(Duration::from_secs(5))),
             ),
         )
@@ -34,7 +36,7 @@ fn setup(mut commands: Commands) {
     commands.spawn((
         TestAlive("ttl 2 secs component"),
         ActiveState::new(Duration::from_secs(2)),
-    )).observe(on_timeout);
+    ));
 }
 
 fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
@@ -43,9 +45,11 @@ fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
     }
 }
 
-/// observe timeout event
-fn on_timeout(trigger: Trigger<TimeoutEvent>) {
-    warn!("entity {:?} timeout", trigger.target());
+/// handle timeout event
+fn on_timeout(mut events: EventReader<TimeoutEvent>) {
+    for TimeoutEvent(entity) in events.read() {
+        warn!("entity {:?} timeout", entity);
+    }
 }
 
 /// reactive idle component to active

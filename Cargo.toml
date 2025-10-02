@@ -10,14 +10,14 @@ license = "MIT OR Apache-2.0"
 keywords = ["bevy", "ecs", "plugin", "wasm"]
 
 [dependencies]
-bevy_app = "0.16.0"
-bevy_ecs = "0.16.0"
-bevy_reflect = "0.16.0"
-bevy_time = "0.16.0"
+bevy_app = "0.17.1"
+bevy_ecs = "0.17.1"
+bevy_reflect = "0.17.1"
+bevy_time = "0.17.1"
 
 
 [dev-dependencies]
-bevy = { version = "0.16.0", default-features = false, features = ["bevy_log"] }
+bevy = { version = "0.17.1", default-features = false, features = ["bevy_log"] }
 
 
 [[example]]
