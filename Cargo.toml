@@ -15,9 +15,19 @@ bevy_ecs = "0.17.1"
 bevy_reflect = "0.17.1"
 bevy_time = "0.17.1"
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.3", default-features = false, features = [
+    "wasm_js",
+] }
+
 
 [dev-dependencies]
 bevy = { version = "0.17.1", default-features = false, features = ["bevy_log"] }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+getrandom = { version = "0.3", default-features = false, features = [
+    "wasm_js",
+] }
 
 
 [[example]]

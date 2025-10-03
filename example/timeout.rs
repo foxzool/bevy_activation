@@ -1,8 +1,8 @@
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
 use bevy_activation::{ActivationPlugin, ActiveState, TimeoutEvent};
-use std::time::Duration;
 use bevy_time::common_conditions::on_timer;
+use std::time::Duration;
 
 fn main() {
     App::new()
@@ -14,7 +14,7 @@ fn main() {
         .add_plugins(LogPlugin::default())
         .add_plugins(ActivationPlugin)
         .add_systems(Startup, setup)
-        .add_event::<TimeoutEvent>()
+        .add_message::<TimeoutEvent>()
         .add_systems(
             Update,
             (
@@ -46,7 +46,7 @@ fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
 }
 
 /// handle timeout event
-fn on_timeout(mut events: EventReader<TimeoutEvent>) {
+fn on_timeout(mut events: MessageReader<TimeoutEvent>) {
     for TimeoutEvent(entity) in events.read() {
         warn!("entity {:?} timeout", entity);
     }

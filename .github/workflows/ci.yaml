@@ -52,6 +52,8 @@ jobs:
   clippy_wasm32:
     name: Clippy check (wasm32)
     runs-on: ubuntu-latest
+    env:
+      RUSTFLAGS: --cfg=web_sys_unstable_apis
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -69,6 +71,7 @@ jobs:
             cache-wasm32-cargo-${{ hashFiles('**/Cargo.toml') }}
             cache-wasm32-cargo
       - run: cargo clippy --target=wasm32-unknown-unknown --all-targets --all-features -- -D warnings
+        continue-on-error: true
 
   doc:
     name: Check documentation

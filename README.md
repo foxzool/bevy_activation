@@ -26,7 +26,7 @@ fn main() {
         .add_plugins(LogPlugin::default())
         .add_plugins(ActivationPlugin)
         .add_systems(Startup, setup)
-        .add_event::<TimeoutEvent>()
+        .add_message::<TimeoutEvent>()
         .add_systems(
             Update,
             (
@@ -58,7 +58,7 @@ fn check_active(q: Query<(&TestAlive, &ActiveState)>) {
 }
 
 /// handle timeout event
-fn on_timeout(mut events: EventReader<TimeoutEvent>) {
+fn on_timeout(mut events: MessageReader<TimeoutEvent>) {
     for TimeoutEvent(entity) in events.read() {
         warn!("entity {:?} timeout", entity);
     }
