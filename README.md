@@ -78,6 +78,7 @@ fn reactive_idle(mut q_idle: Query<&mut ActiveState>) {
 
 | bevy | bevy_activation |
 |------|-----------------|
+| 0.18 | 0.5             |
 | 0.17 | 0.4             |
 | 0.16 | 0.3             |
 | 0.15 | 0.2             |
